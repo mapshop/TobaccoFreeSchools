@@ -71,13 +71,13 @@
     </div>
     
 
-    <script src = "addresses.js"></script>
+    <script src = "CollegeCampuses.js"></script>
     
     
     <script>
         var map = L.map('map', {
             center: [38.055,-84.483],
-            zoom: 14,
+            zoom: 8,
             minZoom: 10,
             maxZoom: 17,
             zoomControl: true,
@@ -91,7 +91,7 @@
     map.addLayer(layer);     
         
        
-    var habitatData = L.geoJson(address, {
+    var schoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker (latlng, {
                     width: 0.5,
@@ -106,21 +106,20 @@
                     
             var props = layer.feature.properties;
             
-            layer.bindPopup("<b>"+props.ADDRESS+"</b>"+"<br>"+"Year: "+props.Year);
+            layer.bindPopup("<b>"+props.ADDRESS+"</b>");
                 
         }
     }).addTo(map);
         
        
-function getColor(year) {
-    return year >= 2010 ? '#018571' :
-           year >= 2000 ? '#80cdc1' :
-           year >= 1990 ? '#dfc27d' :
+function getColor(Policy) {
+    return Policy == "TF" ? '#018571' :
+           Policy == "SF" ? '#80cdc1' :
                       '#a6611a';
         } 
 function style(feature) {
     return {
-        fillColor: getColor(feature.properties.Year),
+        fillColor: getColor(feature.properties.Policy),
         weight: 2,
         opacity: 1,
         color: 'white',
