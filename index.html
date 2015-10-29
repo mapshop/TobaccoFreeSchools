@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Tobacco Free Schools</title>
+    <title>Tobacco- & Smoke-free Schools</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     
@@ -62,7 +62,7 @@
 <body>
     <header>
 
-        <h1>Tobacco Free Schools DRAFT</h1>
+        <h1>Tobacco- & Smoke-free Schools DRAFT</h1>
         
     </header>
 
@@ -92,7 +92,7 @@
     map.addLayer(basemaplayer);     
         
 //        Adding and symbolizing K-12 Schools
-        
+/////////////////////////////////////////////////////        
         var k12SchoolData = L.geoJson(k12schools, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker (latlng, {
@@ -112,7 +112,11 @@
             layer.bindPopup("<b>"+props.School_Dis+"</b>");
                 
         }
-    }).addTo(map);       
+    }).addTo(map);
+        
+        
+//        Adding and symbolizing Colleges
+/////////////////////////////////////////////////////
     var schoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker (latlng, {
@@ -165,6 +169,23 @@ function style2(feature) {
         fillOpacity: 0.3
     }
 }         
+
+//ATTEMPT to add clickable legend
+/////////////////////////////////////////////////////
+        var sourcesLabels = {
+            "<b style='color:#8da0cb'>Tobacco-free K-12 School District</b>": k12SchoolData,
+            "<b style='color:#B22222'>Tobacco-free College</b>": schoolData
+            };
+        L.control.layers(null, sourcesLabels, { collapsed:false }).addTo(map);
+        
+
+        
+        
+        
+        
+//OLD CRAP
+/////////////////////////////////////////////////////
+        
 //var legend = L.control({position: 'bottomright'});
 //
 //legend.onAdd = function (map) {
