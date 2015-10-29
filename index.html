@@ -76,19 +76,19 @@
     
     <script>
         var map = L.map('map', {
-            center: [38.055,-84.483],
-            zoom: 8,
-            minZoom: 10,
+            center: [37.836, -85.794],
+            zoom: 7,
+            minZoom: 6,
             maxZoom: 17,
             zoomControl: true,
             dragging: true,
         });
                
  
-    var layer =new L.StamenTileLayer("toner-lite");
+    var basemaplayer =new L.StamenTileLayer("toner-lite");
         
      
-    map.addLayer(layer);     
+    map.addLayer(basemaplayer);     
         
        
     var schoolData = L.geoJson(campus, {
@@ -105,16 +105,17 @@
             )
                     
             var props = layer.feature.properties;
-            
-            layer.bindPopup("<b>"+props.ADDRESS+"</b>");
+//            console.log(layer.feature.properties.University);
+            layer.bindPopup("<b>"+props.University+"</b>");
                 
         }
     }).addTo(map);
-        
+
+
        
 function getColor(Policy) {
-    return Policy == "TF" ? '#018571' :
-           Policy == "SF" ? '#80cdc1' :
+    return Policy == "TF" ? '#B22222' :
+           Policy == "SF" ? '#FFFF00' :
                       '#a6611a';
         } 
 function style(feature) {
@@ -128,26 +129,26 @@ function style(feature) {
     }
 }    
         
-var legend = L.control({position: 'bottomright'});
+//var legend = L.control({position: 'bottomright'});
+//
+//legend.onAdd = function (map) {
+//
+//    var div = L.DomUtil.create('div', 'info legend'),
+//        grades = [1980, 1990, 2000, 2010],
+//        labels = [];
+//
+//    // loop through our density intervals and generate a label with a colored square for each interval
+//    for (var i = 0; i < grades.length; i++) {
+//        console.log("legend for "+ grades[i] + " to "+grades[i+1]+" = " +getColor(grades[i] + 1));
+//        div.innerHTML +=
+//            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+//            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+//    }  
+//
+//    return div;
+//};
 
-legend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [1980, 1990, 2000, 2010],
-        labels = [];
-
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        console.log("legend for "+ grades[i] + " to "+grades[i+1]+" = " +getColor(grades[i] + 1));
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-    }  
-
-    return div;
-};
-
-legend.addTo(map);
+//legend.addTo(map);
         
     </script>
     
