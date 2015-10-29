@@ -72,6 +72,7 @@
     
 
     <script src = "CollegeCampuses.js"></script>
+    <script src = 'K12schools.js'></script>
     
     
     <script>
@@ -90,7 +91,28 @@
      
     map.addLayer(basemaplayer);     
         
-       
+//        Adding and symbolizing K-12 Schools
+        
+        var k12SchoolData = L.geoJson(k12schools, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker (latlng, {
+//                    radius: 10,
+                    width: 0.2,
+                    fillOpacity: 0.8
+            });
+        },
+        onEachFeature: function(feature, layer) {            
+            
+            layer.setStyle(
+                style2(feature)
+            )
+                    
+            var props = layer.feature.properties;
+//            console.log(layer.feature.properties.Zip);
+            layer.bindPopup("<b>"+props.School_Dis+"</b>");
+                
+        }
+    }).addTo(map);       
     var schoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker (latlng, {
@@ -110,6 +132,9 @@
                 
         }
     }).addTo(map);
+        
+        
+
 
 
        
@@ -120,6 +145,7 @@ function getColor(Policy) {
         } 
 function style(feature) {
     return {
+        width:.2,
         fillColor: getColor(feature.properties.Policy),
         weight: 2,
         opacity: 1,
@@ -128,7 +154,17 @@ function style(feature) {
         fillOpacity: 0.7
     }
 }    
-        
+
+function style2(feature) {
+    return {
+        fillColor: "blue",
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        //dashArray: '3',
+        fillOpacity: 0.3
+    }
+}         
 //var legend = L.control({position: 'bottomright'});
 //
 //legend.onAdd = function (map) {
