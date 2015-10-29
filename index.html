@@ -9,19 +9,24 @@
     
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
     <script src="http://maps.stamen.com/js/tile.stamen.js"></script> 
+
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
     
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: black;
+            background: whitesmoke;
             font-family: Lato, sans-serif;
-            color: '#4C4C33';
+            color: #0D0000;
         }
+        
         header {
             padding: 6px 10%;
         }
+        
         h1 {
             position: absolute;
             z-index: 100;
@@ -30,32 +35,101 @@
             padding: 8px 15px;
             margin: 0;
             color: whitesmoke;
-            font-size: 1.3em;
-            background: rgba(25,25,25,0.8);
-            border-radius: 0; 
-            font-weight: normal;
-        }
-        .leaflet-popup-content-wrapper {
-            opacity: 0.9;
+            font-size: 1.5em;
+            background: rgba(25, 25, 25, 0.8);
             border-radius: 5px;
         }
-        #map {            
+        
+        #map {
             position: absolute;
             width: 100%;
             top: 0;
             bottom: 0;
         }
-        .legend {
-            line-height: 18px;
-            color: #555;
+        
+        footer {
+            padding: 6px 10%;
+            width: 80%;
         }
-        .legend i {
-            width: 18px;
-            height: 18px;
+        
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        
+        .legend {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(75, 75, 75, 0.8);
+            color: whitesmoke;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            width: 160px;
+        }
+        
+        .legend h3 {
+            padding: 5px 0px;
+            font-size: 1.1em;
+            font-weight: bold;
+            line-height: 1em;
+            color: whitesmoke;
+            margin: 0;
+        }
+        
+        .legend ul {
+            padding: 0;
+        }
+        
+        .legend li {
+            list-style-type: none;
+            height: 22px;
+        }
+        
+        .legend span {
+            width: 30px;
+            height: 20px;
             float: left;
-            margin-right: 8px;
-            opacity: 0.7;
-}
+            margin-right: 10px;
+        }
+        
+        #ui-controls {
+            width: 176px;
+            padding: 8px 15px 8px 15px;
+            background: rgba(75, 75, 75, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            color: whitesmoke;
+        }
+        
+        .year-slider {
+            width: 100%;
+        }
+        
+        #ui-controls .min {
+            float: left;
+        }
+        
+        #ui-controls .max {
+            float: right;
+        }
+        
+        label {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .info {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            text-align: right;
+        }
+        
+        .info h3 {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -67,7 +141,11 @@
     </header>
 
     <div id='map'></div>
-    
+    <div id="ui-controls">
+        <label><span class="min">2008</span><span class="max">2015</span>
+            <input type="range" min="2008" , max="2015" , value="2015" , step="1" , class="year-slider"></input>
+        </label>
+    </div>
     </div>
     
 
@@ -89,7 +167,47 @@
     var basemaplayer =new L.StamenTileLayer("toner-lite");
         
      
-    map.addLayer(basemaplayer);     
+    map.addLayer(basemaplayer);    
+//createSliderUI();
+        
+//Attempt to add time slider
+/////////////////////////////////////////////////////
+
+        // declare global variables
+        var dataLayer,
+            attribute = "2015";
+        
+        // create a Leaflet control object and store a reference to it in a variable
+        var sliderControl = L.control({
+            position: 'bottomleft'
+        });
+        
+        // when we add this control object to the map
+        sliderControl.onAdd = function (map) {
+            // select an existing DOM element with an id of "ui-controls"
+            var slider = L.DomUtil.get("ui-controls");
+            // when the user clicks on the slider element
+            L.DomEvent.addListener(slider, 'mousedown', function (e) {
+                // prevent the click event from bubbling up to the map
+                L.DomEvent.stopPropagation(e);
+            });
+            // return the slider from the onAdd method
+            return slider;
+        }
+        // add the control object containing our slider element to the map
+        sliderControl.addTo(map);
+        
+//function to createSliderUI
+        function createSliderUI() {
+            $(".year-slider")
+                .on('input change', function () {
+                    attribute = $(this).val();
+                    updateMap();
+                });
+        }        
+        
+        
+        
         
 //        Adding and symbolizing K-12 Schools
 /////////////////////////////////////////////////////        
@@ -114,8 +232,19 @@
         }
     }).addTo(map);
         
+
+//        Adding Square Symbols TEST
+/////////////////////////////////////////////////////
+//var myIcon = L.divIcon({className: 'my-div-icon'});
+//// you can set .my-div-icon styles in CSS
+//
+//L.marker([-77.839721, 39.295726], {icon: myIcon}).addTo(map);
+//my-div-icon.addTo(map);
+/////////////////////////////////////////////////////
         
-//        Adding and symbolizing Colleges
+        
+        
+//        Adding and symbolizing Colleges as Circles
 /////////////////////////////////////////////////////
     var schoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
@@ -136,6 +265,8 @@
                 
         }
     }).addTo(map);
+/////////////////////////////////////////////////////
+        
         
         
 
@@ -169,6 +300,8 @@ function style2(feature) {
         fillOpacity: 0.3
     }
 }         
+
+map.removeLayer(k12SchoolData)
 
 //ATTEMPT to add clickable legend
 /////////////////////////////////////////////////////
