@@ -261,7 +261,7 @@ createSliderUI();
                     
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
-            layer.bindPopup("<b>"+props.University+"</b>"+"- "+props.ImpYear);
+            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
                 
         }
     }).addTo(map);
@@ -334,7 +334,7 @@ function updateMap(){
             )                  
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
-            layer.bindPopup("<b>"+props.University+"</b>"); 
+            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear); 
         }
     }).addTo(map);
 }
