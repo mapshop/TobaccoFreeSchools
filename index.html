@@ -313,9 +313,11 @@ map.removeLayer(k12SchoolData);
 //      Update Map after Time Slider Event
 /////////////////////////////////////////////////////
 function updateMap(){
-//    console.log(attribute);
+    console.log(attribute);
     map.removeLayer(schoolData);
-    
+    if (schoolUpdate){
+        map.removeLayer(schoolUpdate);
+    }
     var schoolUpdate = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker (latlng, {
