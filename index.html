@@ -137,7 +137,7 @@
     <header>
 
         <h1>Tobacco- & Smoke-free Schools DRAFT</h1>
-        
+                
     </header>
 
     <div id='map'></div>
@@ -200,7 +200,7 @@ createSliderUI();
 /////////////////////////////////////////////////////
         function createSliderUI() {
             $(".year-slider")
-                .on('input change', function () {
+                .on('input', function () {
                     attribute = $(this).val();
                     updateMap();
                 });
@@ -315,10 +315,7 @@ map.removeLayer(k12SchoolData);
 function updateMap(){
     console.log(attribute);
     map.removeLayer(schoolData);
-    if (schoolUpdate){
-        map.removeLayer(schoolUpdate);
-    }
-    var schoolUpdate = L.geoJson(campus, {
+    schoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker (latlng, {
                     width: 0.5,
