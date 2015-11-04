@@ -244,20 +244,39 @@ createSliderUI();
         
         
         
-//        Adding and symbolizing Colleges as Circles
+//        Adding and symbolizing Colleges as Square Icons
 /////////////////////////////////////////////////////
-    var schoolData = L.geoJson(campus, {
+var redIcon = L.icon({ 
+        iconUrl: 'redsq.png', 
+        iconSize: [15, 15],
+        iconAnchor: [15, 15],
+        popupAnchor: [-6, -14]
+    });
+        
+var yellowIcon = L.icon({ 
+        iconUrl: 'yellowsq.png', 
+        iconSize: [12, 12],
+        iconAnchor: [12, 12],
+        popupAnchor: [-6, -11]
+    }); 
+        
+var tfSchoolData = new L.LayerGroup();
+        tfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
-            return L.circleMarker (latlng, {
-                    width: 0.5,
-                    fillOpacity: 0.8
-            });
+            return L.marker (latlng, {
+                    icon: redIcon});
+        },
+         filter: function(feature) {
+//          console.log(feature.properties.ImpYear);
+                    if(feature.properties.Policy=='TF') {
+                        return feature;
+                    }
         },
         onEachFeature: function(feature, layer) {            
             
-            layer.setStyle(
-                style(feature)
-            )
+//            layer.setStyle(
+//                style(feature)
+//            )
                     
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
@@ -265,25 +284,79 @@ createSliderUI();
                 
         }
     }).addTo(map);
+        
+var sfSchoolData = new L.LayerGroup();
+        sfSchoolData = L.geoJson(campus, {
+        pointToLayer: function (feature, latlng) {
+            return L.marker (latlng, {
+                    icon: yellowIcon});
+        },
+         filter: function(feature) {
+//          console.log(feature.properties.ImpYear);
+                    if(feature.properties.Policy=='SF') {
+                        return feature;
+                    }
+        },
+        onEachFeature: function(feature, layer) {            
+            
+//            layer.setStyle(
+//                style(feature)
+//            )
+                    
+            var props = layer.feature.properties;
+//            console.log(layer.feature.properties.University);
+            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+                
+        }
+    }).addTo(map);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //    var schoolData = L.geoJson(campus, {
+//        pointToLayer: function (feature, latlng) {
+//            return L.circleMarker (latlng, {
+//                    width: 0.5,
+//                    fillOpacity: 0.8
+//            });
+//        },
+//        onEachFeature: function(feature, layer) {            
+//            
+//            layer.setStyle(
+//                style(feature)
+//            )
+//                    
+//            var props = layer.feature.properties;
+////            console.log(layer.feature.properties.University);
+//            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+//                
+//        }
+//    }).addTo(map);
 /////////////////////////////////////////////////////
         
        
-function getColor(Policy) {
-    return Policy == "TF" ? '#B22222' :
-           Policy == "SF" ? '#FFFF00' :
-                      '#a6611a';
-        } 
-function style(feature) {
-    return {
-        width:.2,
-        fillColor: getColor(feature.properties.Policy),
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        //dashArray: '3',
-        fillOpacity: 0.7
-    }
-}    
+//function getColor(Policy) {
+//    return Policy == "TF" ? '#B22222' :
+//           Policy == "SF" ? '#FFFF00' :
+//                      '#a6611a';
+//        } 
+//function style(feature) {
+//    return {
+//        width:.2,
+//        fillColor: getColor(feature.properties.Policy),
+//        weight: 2,
+//        opacity: 1,
+//        color: 'white',
+//        //dashArray: '3',
+//        fillOpacity: 0.7
+//    }
+//}    
 
 function style2(feature) {
     return {
@@ -303,7 +376,9 @@ map.removeLayer(k12SchoolData);
 /////////////////////////////////////////////////////
         var sourcesLabels = {
             "<b style='color:#8da0cb'>Tobacco-free K-12 School District</b>": k12SchoolData,
-            "<b style='color:#B22222'>Tobacco-free College</b>": schoolData
+//            "<b style='color:#B22222'>Tobacco-free College</b>": tfSchoolData
+            "<b style='color:rgb(255,34,34)'>Tobacco-free College</b>": tfSchoolData,
+            "<b style='color:rgb(255,255,38)'>Tobacco-free College</b>": sfSchoolData
             };
         L.control.layers(null, sourcesLabels, { collapsed:false }).addTo(map);
 /////////////////////////////////////////////////////
@@ -313,31 +388,94 @@ map.removeLayer(k12SchoolData);
 //      Update Map after Time Slider Event
 /////////////////////////////////////////////////////
 function updateMap(){
-    console.log(attribute);
-    map.removeLayer(schoolData);
-    schoolData = L.geoJson(campus, {
+//    console.log(attribute);
+    map.removeLayer(tfSchoolData);
+    map.removeLayer(sfSchoolData);
+    drawNewMap();
+}
+
+function drawNewMap(){
+    
+//tfSchoolData = new L.LayerGroup();
+        tfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
-            return L.circleMarker (latlng, {
-                    width: 0.5,
-                    fillOpacity: 0.8
-            });
+            return L.marker (latlng, {
+                    icon: redIcon});
         },
-        filter: function(feature) {
-//                console.log(feature.properties.ImpYear);
-                    if(feature.properties.ImpYear>0 && feature.properties.ImpYear<=attribute) {
+         filter: function(feature) {
+
+                    if((feature.properties.Policy=='TF')&&(feature.properties.ImpYear>0 && feature.properties.ImpYear<=attribute)) {
+//                      console.log(feature.properties.ImpYear)
+                        return feature;
+                    }
+        },
+//        onEachFeature: function(feature, layer) {            
+//            
+////            layer.setStyle(
+////                style(feature)
+////            )
+//                    
+//            var props = layer.feature.properties;
+////            console.log(layer.feature.properties.University);
+//            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+//                
+//        }
+    }).addTo(map);
+        
+//sfSchoolData = new L.LayerGroup();
+        sfSchoolData = L.geoJson(campus, {
+        pointToLayer: function (feature, latlng) {
+            return L.marker (latlng, {
+                    icon: yellowIcon});
+        },
+         filter: function(feature) {
+//          console.log(feature.properties.ImpYear);
+                    if((feature.properties.Policy=='SF')&&(feature.properties.ImpYear>0 && feature.properties.ImpYear<=attribute)) {
                         return feature;
                     }
         },
         onEachFeature: function(feature, layer) {            
-            layer.setStyle(
-                style(feature)
-            )                  
+            
+//            layer.setStyle(
+//                style(feature)
+//            )
+                    
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
-            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear); 
+            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+                
         }
-    }).addTo(map);
-}
+    }).addTo(map); 
+    
+    
+    
+    
+    
+    
+//    schoolData = L.geoJson(campus, {
+//        pointToLayer: function (feature, latlng) {
+//            return L.circleMarker (latlng, {
+//                    width: 0.5,
+//                    fillOpacity: 0.8
+//            });
+//        },
+//        filter: function(feature) {
+////                console.log(feature.properties.ImpYear);
+//                    if(feature.properties.ImpYear>0 && feature.properties.ImpYear<=attribute) {
+//                        return feature;
+//                    }
+//        },
+//        onEachFeature: function(feature, layer) {            
+//            layer.setStyle(
+//                style(feature)
+//            )                  
+//            var props = layer.feature.properties;
+////            console.log(layer.feature.properties.University);
+//            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear); 
+//        }
+//    }).addTo(map);
+    console.log(attribute);
+};
 /////////////////////////////////////////////////////        
             
     </script>
