@@ -233,17 +233,6 @@ createSliderUI();
         }
     }).addTo(map);
         
-
-//        Adding Square Symbols TEST
-/////////////////////////////////////////////////////
-//var myIcon = L.divIcon({className: 'my-div-icon'});
-//// you can set .my-div-icon styles in CSS
-//
-//L.marker([-77.839721, 39.295726], {icon: myIcon}).addTo(map);
-//my-div-icon.addTo(map);
-/////////////////////////////////////////////////////
-        
-        
         
 //        Adding and symbolizing Colleges as Square Icons
 /////////////////////////////////////////////////////
@@ -313,76 +302,19 @@ var sfSchoolData = new L.LayerGroup();
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        //    var schoolData = L.geoJson(campus, {
-//        pointToLayer: function (feature, latlng) {
-//            return L.circleMarker (latlng, {
-//                    width: 0.5,
-//                    fillOpacity: 0.8
-//            });
-//        },
-//        onEachFeature: function(feature, layer) {            
-//            
-//            layer.setStyle(
-//                style(feature)
-//            )
-//                    
-//            var props = layer.feature.properties;
-////            console.log(layer.feature.properties.University);
-//            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
-//                
-//        }
-//    }).addTo(map);
-/////////////////////////////////////////////////////
-        
-       
-//function getColor(Policy) {
-//    return Policy == "TF" ? '#B22222' :
-//           Policy == "SF" ? '#FFFF00' :
-//                      '#a6611a';
-//        } 
-//function style(feature) {
-//    return {
-//        width:.2,
-//        fillColor: getColor(feature.properties.Policy),
-//        weight: 2,
-//        opacity: 1,
-//        color: 'white',
-//        //dashArray: '3',
-//        fillOpacity: 0.7
-//    }
-//}    
-
-//function style2(feature) {
-//    return {
-//        size: 100,
-//        fillColor: "green",
-//        weight: 2,
-//        opacity: 1,
-//        color: 'white',
-//        //dashArray: '3',
-//        fillOpacity: 0.5
-//    }
-//}         
-
+     
 map.removeLayer(k12SchoolData);
 
         
-//      Add clickable legend
+//      Add control element - clickable legend
 /////////////////////////////////////////////////////
         var sourcesLabels = {
-            "<b style='color:green'>Tobacco-free K-12 School District</b><br><b style='color:rgb(255,34,34)'>   Tobacco-free College</b><br><b style='color:#4957A6'>Tobacco-free College</b><br>": k12SchoolData,
+            "<b style='color:green'>Tobacco-free K-12 School District</b><br><b style='color:rgb(255,34,34)'>   Tobacco-free College</b><br><b style='color:#4957A6'>Smoke-free College</b><br>": k12SchoolData,
 //            "<b style='color:#B22222'>Tobacco-free College</b>": tfSchoolData
 //            "<b style='color:rgb(255,34,34)'>Tobacco-free College</b>": tfSchoolData,
 //            "<b style='color:rgb(255,255,38)'>Tobacco-free College</b>": sfSchoolData
             };
-        L.control.layers(null, sourcesLabels, { collapsed:false }).addTo(map);
+        L.control.layers(null, sourcesLabels, { collapsed:false}).addTo(map);
 /////////////////////////////////////////////////////
 
 
@@ -449,34 +381,8 @@ function drawNewMap(){
         }
     }).addTo(map); 
     
-    
-    
-    
-    
-    
-//    schoolData = L.geoJson(campus, {
-//        pointToLayer: function (feature, latlng) {
-//            return L.circleMarker (latlng, {
-//                    width: 0.5,
-//                    fillOpacity: 0.8
-//            });
-//        },
-//        filter: function(feature) {
-////                console.log(feature.properties.ImpYear);
-//                    if(feature.properties.ImpYear>0 && feature.properties.ImpYear<=attribute) {
-//                        return feature;
-//                    }
-//        },
-//        onEachFeature: function(feature, layer) {            
-//            layer.setStyle(
-//                style(feature)
-//            )                  
-//            var props = layer.feature.properties;
-////            console.log(layer.feature.properties.University);
-//            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear); 
-//        }
-//    }).addTo(map);
-    console.log(attribute);
+
+//    console.log(attribute);
 };
 /////////////////////////////////////////////////////        
             
