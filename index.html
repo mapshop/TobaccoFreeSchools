@@ -163,8 +163,12 @@
             dragging: true,
         });
                
- 
-    var basemaplayer =new L.StamenTileLayer("toner-lite");
+//    var basemaplayer =new L.StamenTileLayer("toner-lite");
+
+    var basemaplayer = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
         
      
     map.addLayer(basemaplayer);    
@@ -250,8 +254,7 @@ var blueIcon = L.icon({
         popupAnchor: [-7, -14]
     }); 
         
-var tfSchoolData = new L.LayerGroup();
-        tfSchoolData = L.geoJson(campus, {
+        var tfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.marker (latlng, {
                     icon: redIcon});
@@ -275,8 +278,7 @@ var tfSchoolData = new L.LayerGroup();
         }
     }).addTo(map);
         
-var sfSchoolData = new L.LayerGroup();
-        sfSchoolData = L.geoJson(campus, {
+        var sfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.marker (latlng, {
                     icon: blueIcon});
@@ -330,7 +332,6 @@ function updateMap(){
 
 function drawNewMap(){
     
-//tfSchoolData = new L.LayerGroup();
         tfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.marker (latlng, {
@@ -338,7 +339,7 @@ function drawNewMap(){
         },
          filter: function(feature) {
 
-                    if((feature.properties.Policy=='TF')&&(feature.properties.ImpYear>0 && feature.properties.ImpYear<=attribute)) {
+                    if((feature.properties.Policy=='TF')&&( feature.properties.ImpYear<=attribute)) {
 //                      console.log(feature.properties.ImpYear)
                         return feature;
                     }
@@ -356,7 +357,6 @@ function drawNewMap(){
         }
     }).addTo(map);
         
-//sfSchoolData = new L.LayerGroup();
         sfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.marker (latlng, {
@@ -364,7 +364,7 @@ function drawNewMap(){
         },
          filter: function(feature) {
 //          console.log(feature.properties.ImpYear);
-                    if((feature.properties.Policy=='SF')&&(feature.properties.ImpYear>0 && feature.properties.ImpYear<=attribute)) {
+                    if((feature.properties.Policy=='SF')&&( feature.properties.ImpYear<=attribute)) {
                         return feature;
                     }
         },
