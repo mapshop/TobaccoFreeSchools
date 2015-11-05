@@ -214,20 +214,21 @@ createSliderUI();
         var k12SchoolData = L.geoJson(k12schools, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker (latlng, {
-//                    radius: 10,
+                    radius: 7,
+                    fillColor: "green",
                     width: 0.2,
-                    fillOpacity: 0.8
+                    fillOpacity: 0.7
             });
         },
         onEachFeature: function(feature, layer) {            
             
-            layer.setStyle(
-                style2(feature)
-            )
+//            layer.setStyle(
+//                style2(feature)
+//            )
                     
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.Zip);
-            layer.bindPopup("<b>"+props.School_Dis+"</b>");
+            layer.bindPopup("<b>"+props.School_Dis+" School District"+"</b>");
                 
         }
     }).addTo(map);
@@ -247,17 +248,17 @@ createSliderUI();
 //        Adding and symbolizing Colleges as Square Icons
 /////////////////////////////////////////////////////
 var redIcon = L.icon({ 
-        iconUrl: 'redsq.png', 
-        iconSize: [15, 15],
-        iconAnchor: [15, 15],
-        popupAnchor: [-6, -14]
+        iconUrl: 'icondesignred.png', 
+        iconSize: [18, 18],
+        iconAnchor: [18, 18],
+        popupAnchor: [-9, -17]
     });
         
-var yellowIcon = L.icon({ 
-        iconUrl: 'yellowsq.png', 
-        iconSize: [12, 12],
-        iconAnchor: [12, 12],
-        popupAnchor: [-6, -11]
+var blueIcon = L.icon({ 
+        iconUrl: 'icondesignblue.png', 
+        iconSize: [15, 15],
+        iconAnchor: [15, 15],
+        popupAnchor: [-7, -14]
     }); 
         
 var tfSchoolData = new L.LayerGroup();
@@ -289,7 +290,7 @@ var sfSchoolData = new L.LayerGroup();
         sfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.marker (latlng, {
-                    icon: yellowIcon});
+                    icon: blueIcon});
         },
          filter: function(feature) {
 //          console.log(feature.properties.ImpYear);
@@ -358,16 +359,17 @@ var sfSchoolData = new L.LayerGroup();
 //    }
 //}    
 
-function style2(feature) {
-    return {
-        fillColor: "blue",
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        //dashArray: '3',
-        fillOpacity: 0.3
-    }
-}         
+//function style2(feature) {
+//    return {
+//        size: 100,
+//        fillColor: "green",
+//        weight: 2,
+//        opacity: 1,
+//        color: 'white',
+//        //dashArray: '3',
+//        fillOpacity: 0.5
+//    }
+//}         
 
 map.removeLayer(k12SchoolData);
 
@@ -375,10 +377,10 @@ map.removeLayer(k12SchoolData);
 //      Add clickable legend
 /////////////////////////////////////////////////////
         var sourcesLabels = {
-            "<b style='color:#8da0cb'>Tobacco-free K-12 School District</b>": k12SchoolData,
+            "<b style='color:green'>Tobacco-free K-12 School District</b><br><b style='color:rgb(255,34,34)'>   Tobacco-free College</b><br><b style='color:#4957A6'>Tobacco-free College</b><br>": k12SchoolData,
 //            "<b style='color:#B22222'>Tobacco-free College</b>": tfSchoolData
-            "<b style='color:rgb(255,34,34)'>Tobacco-free College</b>": tfSchoolData,
-            "<b style='color:rgb(255,255,38)'>Tobacco-free College</b>": sfSchoolData
+//            "<b style='color:rgb(255,34,34)'>Tobacco-free College</b>": tfSchoolData,
+//            "<b style='color:rgb(255,255,38)'>Tobacco-free College</b>": sfSchoolData
             };
         L.control.layers(null, sourcesLabels, { collapsed:false }).addTo(map);
 /////////////////////////////////////////////////////
@@ -409,24 +411,24 @@ function drawNewMap(){
                         return feature;
                     }
         },
-//        onEachFeature: function(feature, layer) {            
-//            
-////            layer.setStyle(
-////                style(feature)
-////            )
-//                    
-//            var props = layer.feature.properties;
-////            console.log(layer.feature.properties.University);
-//            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
-//                
-//        }
+        onEachFeature: function(feature, layer) {            
+            
+//            layer.setStyle(
+//                style(feature)
+//            )
+                    
+            var props = layer.feature.properties;
+//            console.log(layer.feature.properties.University);
+            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+                
+        }
     }).addTo(map);
         
 //sfSchoolData = new L.LayerGroup();
         sfSchoolData = L.geoJson(campus, {
         pointToLayer: function (feature, latlng) {
             return L.marker (latlng, {
-                    icon: yellowIcon});
+                    icon: blueIcon});
         },
          filter: function(feature) {
 //          console.log(feature.properties.ImpYear);
