@@ -151,6 +151,8 @@
 
     <script src="CollegeCampuses.js"></script>
     <script src='K12schools.js'></script>
+    <script src='ky-counties.js'></script>
+
 
 
     <script>
@@ -172,6 +174,33 @@
 
 
         map.addLayer(basemaplayer);
+        
+        //        Load KY counties into map
+        /////////////////////////////////////////////////////
+        $.getJSON("ky-counties.json", function (counties) {
+        }).fail(function () {
+            // the data file failed to load
+            console.log("Ruh roh! An error has occurred.");
+        }); // end of $.getJSON()      
+        
+        drawCounties(counties);
+        
+        function drawCounties(counties){
+            dataLayer = L.geoJson(counties, {
+                style: function (feature) {
+                    return {
+                        color: '#FFFFFF',
+                        weight: 2,
+                        fillOpacity: .35,
+                        fillColor: '#C0C0C0',
+                        clickable: false
+                    }
+                }
+            }).addTo(map);
+        }
+        /////////////////////////////////////////////////////
+        
+        
         createSliderUI();
 
         //      Add time slider
