@@ -273,7 +273,7 @@ var blueIcon = L.icon({
                     
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
-            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+            layer.bindPopup("<b>"+props.University+"</b>"+"<br>"+"<b style='color:rgb(255,34,34)'>"+"Tobacco-free since: "+"</b>"+props.ImpYear);
                 
         }
     }).addTo(map);
@@ -297,7 +297,7 @@ var blueIcon = L.icon({
                     
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
-            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+            layer.bindPopup("<b>"+props.University+"</b>"+"<br>"+"<b style='color:#4957A6'>"+"Smoke-free since: "+"</b>"+props.ImpYear);
                 
         }
     }).addTo(map);
@@ -311,7 +311,7 @@ map.removeLayer(k12SchoolData);
 //      Add control element - clickable legend
 /////////////////////////////////////////////////////
         var sourcesLabels = {
-            "<b style='color:green'>Tobacco-free K-12 School District</b><br><b style='color:rgb(255,34,34)'>   Tobacco-free College</b><br><b style='color:#4957A6'>Smoke-free College</b><br>": k12SchoolData,
+            "<b style='color:green'>Tobacco-free K-12 School District</b><br><b style='color:rgb(255,34,34)'>Tobacco-free Colleges and Universities</b><br><b style='color:#4957A6'>Smoke-free Colleges and Universities</b><br>": k12SchoolData,
 //            "<b style='color:#B22222'>Tobacco-free College</b>": tfSchoolData
 //            "<b style='color:rgb(255,34,34)'>Tobacco-free College</b>": tfSchoolData,
 //            "<b style='color:rgb(255,255,38)'>Tobacco-free College</b>": sfSchoolData
@@ -352,7 +352,7 @@ function drawNewMap(){
                     
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
-            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+            layer.bindPopup("<b>"+props.University+"</b>"+"<br>"+"<b style='color:rgb(255,34,34)'>"+"Tobacco-free since: "+"</b>"+props.ImpYear);
                 
         }
     }).addTo(map);
@@ -376,7 +376,7 @@ function drawNewMap(){
                     
             var props = layer.feature.properties;
 //            console.log(layer.feature.properties.University);
-            layer.bindPopup("<b>"+props.University+"</b>"+": "+props.ImpYear);
+            layer.bindPopup("<b>"+props.University+"</b>"+"<br>"+"<b style='color:#4957A6'>"+"Smoke-free since: "+"</b>"+props.ImpYear);
                 
         }
     }).addTo(map); 
